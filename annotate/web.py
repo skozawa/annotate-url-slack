@@ -22,4 +22,4 @@ class SlackOptions(Resource):
 
 api.add_resource(Root, '/')
 api.add_resource(SlackAction, '/slack/action')
-api.add_resource(SlackOption, '/slack/options')
+api.add_resource(SlackOptions, '/slack/options')

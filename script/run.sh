@@ -3,8 +3,12 @@ exec 2>&1
 set -e
 
 ROOT="/var/www/apps/annotate-url-slack"
-cd "$ROOT"
 CONFIG_FILE="$ROOT/config/gunicorn.conf.py"
-export APP_ENV="production"
+PID=/var/run/gunicorn.pid
 
-. $ROOT/venv/bin/activate && gunicorn -c $CONFIG_FILE annotate:app
+if [ -f $PID ]; then rm $PID; fi
+
+export APP_ENV="production"
+cd "$ROOT"
+. $ROOT/venv/bin/activate
+gunicorn -c $CONFIG_FILE annotate:app

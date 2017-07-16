@@ -9,7 +9,7 @@ timeout = 60
 # Server Mechanics
 chdir = '/var/www/apps/annotate-url-slack'
 raw_env = 'APP_ENV=production'
-pidfile = '/var/run/gunicorn.pid'
+pidfile = '/var/run/annotate.gunicorn.pid'
 user = 'www-data'
 group = 'www-data'
 

@@ -4,7 +4,7 @@ set -e
 
 ROOT="/var/www/apps/annotate-url-slack"
 CONFIG_FILE="$ROOT/config/gunicorn.conf.py"
-PID=/var/run/gunicorn.pid
+PID=/var/run/annotate.gunicorn.pid
 
 if [ -f $PID ]; then rm $PID; fi
 

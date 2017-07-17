@@ -10,7 +10,7 @@ class SlackAction(Resource):
         payload = self.get_payload()
         print(payload)
         req = self.payload_to_request(payload)
-        if req and req.action_is_ok:
+        if req and req.action_is_ok():
             return {'text': 'yes'}
         else:
             return {'text': 'no'}

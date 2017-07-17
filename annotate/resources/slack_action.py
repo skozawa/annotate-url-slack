@@ -12,7 +12,7 @@ class SlackAction(Resource):
         req = self.payload_to_request(payload)
         if not req:
             return {}
-        return req.response
+        return req.response()
 
     def get_payload(self):
         parser = reqparse.RequestParser()

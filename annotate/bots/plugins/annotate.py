@@ -13,40 +13,26 @@ def listen_url(message, url=None):
     # Message is sent on the channel
     message.send(url)
     attachments = [
-    {
-        'fallback': 'Fallback text',
-        'author_name': 'Author',
-        'author_link': 'http://www.github.com',
-        'text': 'Some text',
-        'color': '#59afe1'
-    }]
-    message.send_webapi('', json.dumps(attachments))
-
-
-@listen_to('test')
-def test(message):
-    attachments = [
         {
-            "text": "Choose a game to play",
-            "fallback": "You are unable to choose a game",
-            "callback_id": "wopr_game",
+            "text": "Do you annotate this url: %s" % (url),
+            "fallback": "You are unable to choose",
+            "callback_id": "annotate_url_request",
             "color": "#3AA3E3",
             "attachment_type": "default",
             "actions": [
                 {
-                    "name": "game",
-                    "text": "Chess",
+                    "name": "annotate_url",
+                    "text": "Yes",
                     "type": "button",
-                    "value": "chess"
+                    "value": "yes"
                 },
                 {
-                    "name": "game",
-                    "text": "Falken's Maze",
+                    "name": "annotate_url",
+                    "text": "No",
                     "type": "button",
-                    "value": "maze"
+                    "value": "not"
                 }
             ]
         }
     ]
     message.send_webapi('', json.dumps(attachments))
-

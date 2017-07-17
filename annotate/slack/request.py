@@ -60,7 +60,7 @@ class ActionRequest(object):
 
     @property
     def original_text(self):
-        attachments = self.original_message.get('attachements', [])
+        attachments = self.original_message.get('attachments', [])
         return attachments[0].get('text', '')
 
     @property

@@ -84,6 +84,7 @@ class AnnotateUrlRequest(ActionRequest):
             "text": target,
             "callback_id": "annotation_%s" % (target),
             "attachment_type": "default",
+            "replace_original": False,
             "actions": [self._action(level) for level in range(1, 6)]
         }
 

@@ -83,9 +83,9 @@ class AnnotateUrlRequest(ActionRequest):
         }
 
     def _action(self, level):
-        return [
+        return {
             'name': 'score',
             'text': str(level),
             'type': 'button',
             'value': int(level)
-        ]
+        }

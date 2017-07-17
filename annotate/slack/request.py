@@ -67,6 +67,11 @@ class ActionRequest(object):
     def response_url(self):
         return self.payload.get('response_url')
 
+    def response(self):
+        if not self.action_is_ok():
+            return {'text': ':x:'}
+        return {'text': ':o:'}
+
 
 class AnnotateUrlRequest(ActionRequest):
     def response(self):

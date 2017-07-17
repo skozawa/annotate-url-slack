@@ -66,3 +66,26 @@ class ActionRequest(object):
     @property
     def response_url(self):
         return self.payload.get('response_url')
+
+
+class AnnotateUrlRequest(ActionRequest):
+    def response(self):
+        if not self.action_is_ok():
+            return {'text': ':x:'}
+        return {'text': self.original_text, 'attachments': [self.attachment(target) for target in ['reading', 'funny', 'topic', 'completely']]}
+
+    def attachment(self, target):
+        return {
+            "text": target,
+            "callback_id": "annotation_%s" % (target),
+            "attachment_type": "default",
+            "actions": [self._action(level) for level in range(1, 6)]
+        }
+
+    def _action(self, level):
+        return [
+            'name': 'score',
+            'text': str(level),
+            'type': 'button',
+            'value': int(level)
+        ]

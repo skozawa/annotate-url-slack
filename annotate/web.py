@@ -3,16 +3,13 @@ from flask_restful import Resource
 from annotate import api
 from annotate import app
 
+from annotate.resources.slack_action import SlackAction
+
 
 class Root(Resource):
     """dispatch /."""
     def get(self):
         return {'message': 'Hello'}
-
-
-class SlackAction(Resource):
-    def post(self):
-        return {}
 
 
 class SlackOptions(Resource):

@@ -22,7 +22,9 @@ python-dateutil==2.6.0
 pytz==2017.2
 requests==2.17.3
 six==1.10.0
+slackbot==0.4.1
 slackclient==1.0.5
+slacker==0.9.50
 urllib3==1.21.1
 websocket-client==0.40.0
 Werkzeug==0.12.2

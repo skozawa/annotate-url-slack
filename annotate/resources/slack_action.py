@@ -10,7 +10,7 @@ class SlackAction(Resource):
         payload = self.get_payload()
         print(payload)
         req = self.payload_to_request(payload)
-        if req.action_is_ok:
+        if req and req.action_is_ok:
             return {'text': 'yes'}
         else:
             return {'text': 'no'}
@@ -23,6 +23,6 @@ class SlackAction(Resource):
 
     def payload_to_request(self, payload):
         callback_id = payload.get('callback_id', None)
-        if callback_id is not None:
-            return
+        if callback_id is None:
+            return None
         return slack_req.ActionRequest(payload)

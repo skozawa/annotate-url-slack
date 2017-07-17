@@ -11,7 +11,7 @@ class SlackAction(Resource):
         print(payload)
         req = self.payload_to_request(payload)
         if req and req.action_is_ok():
-            return {'text': 'yes'}
+            return {'text': req.original_text, 'attachments': [self.attachment(target) for target in ['reading', 'funny', 'topic', 'completely']]}
         else:
             return {'text': 'no'}
 
@@ -26,3 +26,42 @@ class SlackAction(Resource):
         if callback_id is None:
             return None
         return slack_req.ActionRequest(payload)
+
+    def attachment(self, target):
+        return {
+            "text": target,
+            "callback_id": "annotation",
+            "attachment_type": "default",
+            "actions": [
+                {
+                    "name": "score",
+                    "text": "1",
+                    "type": "button",
+                    "value": 1,
+                },
+                {
+                    "name": "score",
+                    "text": "2",
+                    "type": "button",
+                    "value": 2,
+                },
+                {
+                    "name": "score",
+                    "text": "3",
+                    "type": "button",
+                    "value": 3,
+                },
+                {
+                    "name": "score",
+                    "text": "4",
+                    "type": "button",
+                    "value": 4,
+                },
+                {
+                    "name": "score",
+                    "text": "5",
+                    "type": "button",
+                    "value": 5,
+                },
+            ]
+        }

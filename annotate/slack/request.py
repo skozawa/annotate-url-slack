@@ -59,5 +59,10 @@ class ActionRequest(object):
         return self.payload.get('original_message', {})
 
     @property
+    def original_text(self):
+        attachments = self.original_message.get('attachements', [])
+        return attachments[0].get('text', '')
+
+    @property
     def response_url(self):
         return self.payload.get('response_url')

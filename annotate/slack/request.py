@@ -77,14 +77,13 @@ class AnnotateUrlRequest(ActionRequest):
     def response(self):
         if not self.action_is_ok():
             return {'text': ':x:'}
-        return {'text': self.original_text, 'attachments': [self.attachment(target) for target in ['reading', 'funny', 'topic', 'completely']]}
+        return {'text': self.original_text, "replace_original": False, 'attachments': [self.attachment(target) for target in ['reading', 'funny', 'topic', 'completely']]}
 
     def attachment(self, target):
         return {
             "text": target,
             "callback_id": "annotation_%s" % (target),
             "attachment_type": "default",
-            "replace_original": False,
             "actions": [self._action(level) for level in range(1, 6)]
         }
 

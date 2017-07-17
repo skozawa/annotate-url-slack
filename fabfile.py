@@ -18,7 +18,7 @@ def pip_install():
 
 def update():
     with cd(home_dir):
-        run('git pull')
+        run('git pull -q')
         run('git submodule update --init')
         pip_install()
 

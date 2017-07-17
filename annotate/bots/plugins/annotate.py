@@ -14,7 +14,7 @@ def listen_url(message, url=None):
     message.send(url)
     attachments = [
         {
-            "text": "Do you annotate this url: %s" % (url),
+            "text": url,
             "fallback": "You are unable to choose",
             "callback_id": "annotate_url_request",
             "color": "#3AA3E3",
@@ -35,4 +35,4 @@ def listen_url(message, url=None):
             ]
         }
     ]
-    message.send_webapi('', json.dumps(attachments))
+    message.send_webapi('Do you annotate this url ?', json.dumps(attachments))

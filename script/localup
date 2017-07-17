@@ -1,0 +1,2 @@
+. venv/bin/activate
+FLASK_APP=annotate/web.py FLASK_DEBUG=1 flask run -p 8000

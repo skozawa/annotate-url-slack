@@ -11,7 +11,6 @@ def help(message):
 @listen_to('<(https?://[^>]+)>')
 def listen_url(message, url=None):
     # Message is sent on the channel
-    message.send(url)
     attachments = [
         {
             "text": url,
@@ -30,7 +29,7 @@ def listen_url(message, url=None):
                     "name": "annotate_url",
                     "text": "No",
                     "type": "button",
-                    "value": "not"
+                    "value": "no"
                 }
             ]
         }

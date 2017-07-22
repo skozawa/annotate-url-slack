@@ -49,15 +49,15 @@ class SlackRequest(object):
         return self._message_dt
 
     @property
+    def actions(self):
+        return self.payload.get('actions', [])
+
+    @property
     def original_message(self):
         return self.payload.get('original_message', {})
 
 
 class ActionRequest(SlackRequest):
-    @property
-    def actions(self):
-        return self.payload.get('actions', [])
-
     def action_is_ok(self):
         actions = self.actions
         if len(actions) == 1 and actions[0].get('value', '') == 'yes':
@@ -91,15 +91,13 @@ class OptionsRequest(SlackRequest):
         return self.payload.get('name', '')
 
     @property
-    def selected_options(self):
-        return self.payload.get('selected_options', [])
-
-    @property
     def value(self):
-        options = self.selected_options
-        if not options:
+        if not self.actions:
             return ''
-        return options[0].get('value', '')
+        selected_options = self.actions[0].get('selected_options', [])
+        if not selected_options:
+            return ''
+        return selected_options[0].get('value', '')
 
 
 class QualityMetricsRequest(OptionsRequest):

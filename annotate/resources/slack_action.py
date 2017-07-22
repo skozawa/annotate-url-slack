@@ -26,4 +26,6 @@ class SlackAction(Resource):
             return None
         if callback_id == 'annotate_url_request':
             return slack_req.AnnotateUrlRequest(payload)
+        if callback_id == 'quality_metrics':
+            return slack_req.QualityMetricsRequest(payload)
         return slack_req.ActionRequest(payload)

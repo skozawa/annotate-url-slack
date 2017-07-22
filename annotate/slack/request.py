@@ -1,5 +1,7 @@
 from datetime import datetime
 
+import annotate.slack.response as slack_res
+
 
 class SlackRequest(object):
     def __init__(self, payload):
@@ -76,16 +78,6 @@ class ActionRequest(SlackRequest):
         return {'text': ':o:'}
 
 
-class OptionsRequest(SlackRequest):
-    @property
-    def name(self):
-        return self.payload.get('name', '')
-
-    @property
-    def value(self):
-        return self.payload.get('value', '')
-
-
 class AnnotateUrlRequest(ActionRequest):
     def response(self):
         if not self.action_is_ok():
@@ -107,3 +99,19 @@ class AnnotateUrlRequest(ActionRequest):
             'type': 'button',
             'value': int(level)
         }
+
+
+class OptionsRequest(SlackRequest):
+    @property
+    def name(self):
+        return self.payload.get('name', '')
+
+    @property
+    def value(self):
+        return self.payload.get('value', '')
+
+
+class QualityMetricsRequest(OptionsRequest):
+    def response(self, url):
+        res = slack_res.OptionsResponse(url)
+    return {'text': 'Annotate URL: ' + url, 'attachments': res.attachments()}

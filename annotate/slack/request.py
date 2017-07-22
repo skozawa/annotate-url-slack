@@ -1,18 +1,9 @@
 from datetime import datetime
 
-class ActionRequest(object):
+
+class SlackRequest(object):
     def __init__(self, payload):
         self.payload = payload
-
-    @property
-    def actions(self):
-        return self.payload.get('actions', [])
-
-    def action_is_ok(self):
-        actions = self.actions
-        if len(actions) == 1 and actions[0].get('value', '') == 'yes':
-            return True
-        return False
 
     @property
     def callback_id(self):
@@ -53,6 +44,18 @@ class ActionRequest(object):
         if self._message_dt is None:
             self._message_dt = datetime.fromtimestamp(self.payload.get('message_ts', 0))
         return self._message_dt
+
+
+class ActionRequest(SlackRequest):
+    @property
+    def actions(self):
+        return self.payload.get('actions', [])
+
+    def action_is_ok(self):
+        actions = self.actions
+        if len(actions) == 1 and actions[0].get('value', '') == 'yes':
+            return True
+        return False
 
     @property
     def original_message(self):

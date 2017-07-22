@@ -39,10 +39,13 @@ class EvaluateResponse(object):
         self.value = value
         self.level = 5
 
+    def text(self, url):
+        return 'Annotate URL: ' + url
+
     def attachments(self):
         return [
             {
-                'text': 'evaluate ' + self.value,
+                'text': 'Evaluate: ' + self.value,
                 'callback_id': 'evaluate_metric',
                 'attachement_type': 'default',
                 'actions': [self._action(level) for level in range(1, self.level + 1)]

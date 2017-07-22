@@ -1,4 +1,5 @@
 from datetime import datetime
+import re
 
 import annotate.slack.response as slack_res
 
@@ -90,11 +91,23 @@ class OptionsRequest(SlackRequest):
         return self.payload.get('name', '')
 
     @property
+    def selected_options(self):
+        return self.payload.get('selected_options', [])
+
+    @property
     def value(self):
-        return self.payload.get('value', '')
+        options = self.selected_options
+        if not options:
+            return ''
+        return options[0].get('value', '')
 
 
 class QualityMetricsRequest(OptionsRequest):
     def response(self):
         res = slack_res.EvaluateResponse(self.value)
-        return {'text': 'Annotate', 'attachments': res.attachments()}
+        return {'text': res.text(self.url()), 'attachments': res.attachments()}
+
+    def url(self):
+        text = self.original_message.get('text', '')
+        match = re.compile('<(https?://[^>]+)>').search(text)
+        return match.group(1)

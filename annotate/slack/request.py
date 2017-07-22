@@ -76,6 +76,16 @@ class ActionRequest(SlackRequest):
         return {'text': ':o:'}
 
 
+class OptionsRequest(SlackRequest):
+    @property
+    def name(self):
+        return self.payload.get('name', '')
+
+    @property
+    def value(self):
+        return self.payload.get('value', '')
+
+
 class AnnotateUrlRequest(ActionRequest):
     def response(self):
         if not self.action_is_ok():

@@ -112,6 +112,6 @@ class OptionsRequest(SlackRequest):
 
 
 class QualityMetricsRequest(OptionsRequest):
-    def response(self, url):
+    def response(self):
         res = slack_res.EvaluateResponse(self.value)
         return {'text': 'Annotate URL: ' + url, 'attachments': res.attachments()}

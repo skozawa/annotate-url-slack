@@ -60,6 +60,13 @@ class SlackRequest(object):
     def original_text(self):
         return self.original_message.get('text', '')
 
+    @property
+    def original_attachments_text(self):
+        attachments = self.original_message.get('attachments', [])
+        if not attachments:
+            return ''
+        return attachments[0].get('text', '')
+
     def resource_url(self):
         text = self.original_message.get('text', '')
         match = re.compile('<(https?://[^>]+)>').search(text)
@@ -85,8 +92,21 @@ class ActionRequest(SlackRequest):
 
 class EvaluateMetricRequest(ActionRequest):
     def response(self):
-        res = slack_res.OptionsResponse(self.resource_url())
+        res = slack_res.OptionsResponse(self.resource_url(), scores=self.scores())
         return {'text': res.text(), 'attachments': res.attachments()}
+
+    def scores(self):
+        scores = {}
+        scores[self.attr()] = self.value()
+        return scores
+
+    def value(self):
+        if not self.actions:
+            return 0
+        return self.actions[0].get('value', 0)
+
+    def attr(self):
+        return self.original_attachments_text
 
 
 class OptionsRequest(SlackRequest):

@@ -45,7 +45,7 @@ class EvaluateResponse(object):
     def attachments(self):
         return [
             {
-                'text': 'Evaluate: ' + self.value,
+                'text': self.value,
                 'callback_id': 'evaluate_metric',
                 'attachement_type': 'default',
                 'actions': [self._action(level) for level in range(1, self.level + 1)]

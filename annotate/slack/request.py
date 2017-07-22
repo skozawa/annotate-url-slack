@@ -103,7 +103,7 @@ class AnnotateUrlRequest(ActionRequest):
 
 class EvaluateMetricRequest(ActionRequest):
     def response(self):
-        res = slack_res.OptionsRequest(self.original_text)
+        res = slack_res.OptionsResponse(self.original_text)
         return {'text': self.original_text, 'attachments': res.attachments()}
 
 

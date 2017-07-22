@@ -47,6 +47,10 @@ class SlackRequest(object):
             self._message_dt = datetime.fromtimestamp(self.payload.get('message_ts', 0))
         return self._message_dt
 
+    @property
+    def original_message(self):
+        return self.payload.get('original_message', {})
+
 
 class ActionRequest(SlackRequest):
     @property
@@ -58,10 +62,6 @@ class ActionRequest(SlackRequest):
         if len(actions) == 1 and actions[0].get('value', '') == 'yes':
             return True
         return False
-
-    @property
-    def original_message(self):
-        return self.payload.get('original_message', {})
 
     @property
     def original_text(self):
@@ -76,29 +76,6 @@ class ActionRequest(SlackRequest):
         if not self.action_is_ok():
             return {'text': ':x:'}
         return {'text': ':o:'}
-
-
-class AnnotateUrlRequest(ActionRequest):
-    def response(self):
-        if not self.action_is_ok():
-            return {'text': ':x:'}
-        return {'text': self.original_text, "replace_original": False, 'attachments': [self.attachment(target) for target in ['reading', 'funny', 'topic', 'completely']]}
-
-    def attachment(self, target):
-        return {
-            "text": target,
-            "callback_id": "annotation_%s" % (target),
-            "attachment_type": "default",
-            "actions": [self._action(level) for level in range(1, 6)]
-        }
-
-    def _action(self, level):
-        return {
-            'name': 'score',
-            'text': str(level),
-            'type': 'button',
-            'value': int(level)
-        }
 
 
 class EvaluateMetricRequest(ActionRequest):

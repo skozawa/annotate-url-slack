@@ -12,5 +12,5 @@ def help(message):
 
 @listen_to('<(https?://[^>]+)>')
 def listen_url(message, url=None):
-    response = OptionsResponse(url)
-    message.send_webapi('Annotate URL: ' + url, json.dumps(response.attachments()))
+    res = OptionsResponse(url)
+    message.send_webapi(res.text(), json.dumps(res.attachments()))

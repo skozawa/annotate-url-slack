@@ -7,6 +7,9 @@ class OptionsResponse(object):
         self.values = ['Quality', 'Readability', 'Informativeness', 'Style', 'Topic', 'Sentiment']
         self.scores = scores
 
+    def text(self):
+        return 'Annotate URL: ' + self.url
+
     def attachments(self):
         return [
             {

@@ -92,13 +92,8 @@ class ActionRequest(SlackRequest):
 
 class EvaluateMetricRequest(ActionRequest):
     def response(self):
-        res = slack_res.OptionsResponse(self.resource_url(), scores=self.scores())
+        res = slack_res.OptionsResponse(self.resource_url())
         return {'text': res.text(), 'attachments': res.attachments()}
-
-    def scores(self):
-        scores = {}
-        scores[self.attr()] = self.value()
-        return scores
 
     def value(self):
         if not self.actions:

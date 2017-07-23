@@ -24,8 +24,7 @@ class OptionsResponse(object):
                         "type": "select",
                         "options": [self._option(v) for v in self.values]
                     }
-                ],
-                "scores": self.scores
+                ]
             }
         ]
 

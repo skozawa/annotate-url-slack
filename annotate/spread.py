@@ -19,6 +19,8 @@ class Gspread(object):
         self.year = today.year
         self.month = today.month
         self._current_spreadsheet = None
+        self._current_worksheet = None
+        self.columns = ['URL', 'Time', 'Title', 'Annotator'] + ['Quality', 'Readability', 'Informativeness', 'Style', 'Topic', 'Sentiment']
         
     @property
     def current_spreadsheet(self):
@@ -37,11 +39,27 @@ class Gspread(object):
 
     def initialize_sheet(self, sheet):
         current_worksheets = sheet.worksheets()
-        columns = ['URL', 'Time', 'Title', 'Annotator'] + ['Quality', 'Readability', 'Informativeness', 'Style', 'Topic', 'Sentiment']
         for ws_index in range(12):
-            ws = sheet.add_worksheet(title='%02d' % (ws_index + 1), rows=1, cols=len(columns))
+            ws = sheet.add_worksheet(title='%02d' % (ws_index + 1), rows=1, cols=len(self.columns))
             for (i, value) in enumerate(columns):
                 ws.update_cell(1, i+1, value)
         for worksheet in current_worksheets:
             sheet.del_worksheet(worksheet)
+
+    @property
+    def current_worksheet(self):
+        if self._current_worksheet is None:
+            self._current_worksheet = self.current_spreadsheet.get_worksheet(self.month - 1)
+        return self._current_worksheet
+
+    def find_data_by_url(self, url):
+        try:
+            cell = self.current_worksheet.find(url)
+            values = self.current_worksheet.row_values(cell.row)
+            return dict(zip(self.columns, values))
+        except Exception:
+            return {}
+
+    def add_url(self, url, time, title, annotator):
+        self.current_worksheet.append_row([url, time, title, annotator])
 

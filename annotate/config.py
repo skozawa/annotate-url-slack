@@ -5,6 +5,7 @@ class Config(object):
     DEBUG = False
     TESTING = False
     SESSION_COOKIE_SECURE = False
+    GSPREAD_KEY_JSON = 'config/gspread-key.json'
 
 
 class ProductionConfig(Config):

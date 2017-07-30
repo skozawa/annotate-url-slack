@@ -15,17 +15,19 @@ class Gspread(object):
             ]
         )
         self.client = gspread.authorize(credentials)
+        self._current_spreadsheet = None
         
     @property
     def current_spreadsheet(self):
         if self._current_spreadsheet is None:
-            name = 'annotate-%s' % (datetime.datetime.now().strftime('%y%m'))
+            name = 'annotate-quality-%s' % (datetime.datetime.now().strftime('%y%m'))
             self._current_spreadsheet = self.open_or_create_spreadsheet(name)
         return self._current_spreadsheet
         
     def open_or_create_spreadsheet(self, name):
         try:
             sheet = self.client.open(name)
-        except Exeception:
+        except Exception:
             sheet = self.client.create(name)
+
         return sheet

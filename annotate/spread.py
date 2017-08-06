@@ -20,7 +20,7 @@ class Gspread(object):
         self.month = today.month
         self._current_spreadsheet = None
         self._current_worksheet = None
-        self.columns = ['URL', 'Time', 'Title', 'Annotator'] + ['Quality', 'Readability', 'Informativeness', 'Style', 'Topic', 'Sentiment']
+        self.columns = ['URL', 'Time', 'Title', 'Annotator'] + config.METRICS
         
     @property
     def current_spreadsheet(self):

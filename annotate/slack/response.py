@@ -1,10 +1,12 @@
+from annotate.config import config
+
 class OptionsResponse(object):
     def __init__(self, url, name="metrics", callback_id="quality_metrics", color="#3AA3E3", scores={}):
         self.url = url
         self.name = name
         self.callback_id = callback_id
         self.color = color
-        self.values = ['Quality', 'Readability', 'Informativeness', 'Style', 'Topic', 'Sentiment']
+        self.values = config.METRICS.copy()
         self.scores = scores
 
     def text(self):

@@ -1,5 +1,4 @@
 import json
-import requests
 
 from flask_restful import Resource
 from flask_restful import reqparse
@@ -30,7 +29,6 @@ class SlackAction(Resource):
             return slack_req.QualityMetricsRequest(payload)
         if callback_id == 'evaluate_metric':
             req = slack_req.EvaluateMetricRequest(payload)
-            requests.post(req.response_url, json={'text': 'Processing...'})
             gspread = Gspread()
             gspread.update_url_score(req.resource_url(), req.user_name, req.attr, req.value)
             return req

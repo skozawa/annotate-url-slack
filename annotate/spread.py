@@ -63,3 +63,10 @@ class Gspread(object):
     def add_url(self, url, time, title, annotator):
         self.current_worksheet.append_row([url, time, title, annotator])
 
+    def update_url_score(self, url, annotator, metric, score):
+        try:
+            cell = self.current_worksheet.find(url)
+        except Exception:
+            self.add_url(url, datetime.datetime.now(), '', annotator)
+            cell = self.current_worksheet.find(url)
+        self.current_worksheet.update_cell(cell.row, self.columns.index(metric) + 1, score)

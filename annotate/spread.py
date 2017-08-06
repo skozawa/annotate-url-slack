@@ -25,7 +25,7 @@ class Gspread(object):
     @property
     def current_spreadsheet(self):
         if self._current_spreadsheet is None:
-            name = 'annotate-quality-%04d%02d' % (self.year, self.month)
+            name = 'annotate-quality-%04d' % (self.year)
             self._current_spreadsheet = self.open_or_create_spreadsheet(name)
         return self._current_spreadsheet
         

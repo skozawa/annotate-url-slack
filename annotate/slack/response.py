@@ -1,13 +1,22 @@
 from annotate.config import config
+from annotate.spread import Gspread
 
 class OptionsResponse(object):
-    def __init__(self, url, name="metrics", callback_id="quality_metrics", color="#3AA3E3", scores={}):
+    def __init__(self, url, name="metrics", callback_id="quality_metrics", color="#3AA3E3", scores=None):
         self.url = url
         self.name = name
         self.callback_id = callback_id
         self.color = color
         self.values = config.METRICS.copy()
-        self.scores = scores
+        self._scores = scores
+
+    @property
+    def scores(self):
+        if self._scores is None:
+            gspread = Gspread()
+            data = gspread.find_data_by_url(self.url)
+            self._scores = {v: int(data[v]) for v in self.values if v in data and data[v]}
+        return self._scores
 
     def text(self):
         return 'Annotate URL: ' + self.url
@@ -31,9 +40,15 @@ class OptionsResponse(object):
         ]
 
     def _option(self, value):
-        if value not in self.scores:
-            return {'text': ':white_medium_square: ' + value, 'value': value}
-        return {'text': ':white_square_button: ' + value, 'value': value}
+        return {'text': self._emoji(self.scores.get(value, 0)) + ' ' + value, 'value': value}
+
+    @staticmethod
+    def _emoji(score):
+        score_emojis = {
+            1: ':one:', 2: ':two:', 3: ':three:',
+            4: ':four:', 5: ':five',
+        }
+        return score_emojis.get(score, ':white_medium_square:')
 
 
 class EvaluateResponse(object):

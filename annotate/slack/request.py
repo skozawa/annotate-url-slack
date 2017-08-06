@@ -95,11 +95,13 @@ class EvaluateMetricRequest(ActionRequest):
         res = slack_res.OptionsResponse(self.resource_url())
         return {'text': res.text(), 'attachments': res.attachments()}
 
+    @property
     def value(self):
         if not self.actions:
             return 0
         return self.actions[0].get('value', 0)
 
+    @property
     def attr(self):
         return self.original_attachments_text
 

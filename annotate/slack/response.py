@@ -18,6 +18,9 @@ class OptionsResponse(object):
             self._scores = {v: int(data[v]) for v in self.values if v in data and data[v]}
         return self._scores
 
+    def response(self):
+        return {'text': self.text(), 'attachments': self.attachements()}
+
     def text(self):
         return 'Annotate URL: ' + self.url
 
@@ -52,12 +55,16 @@ class OptionsResponse(object):
 
 
 class EvaluateResponse(object):
-    def __init__(self, value):
+    def __init__(self, value, url=''):
         self.value = value
+        self.url   = url
         self.level = 5
 
-    def text(self, url):
-        return 'Annotate URL: ' + url
+    def response(self):
+        return {'text': self.text(), 'attachments': self.attachments()}
+
+    def text(self):
+        return 'Annotate URL: ' + self.url
 
     def attachments(self):
         return [

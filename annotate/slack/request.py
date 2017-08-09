@@ -91,10 +91,6 @@ class ActionRequest(SlackRequest):
 
 
 class EvaluateMetricRequest(ActionRequest):
-    def response(self):
-        res = slack_res.OptionsResponse(self.resource_url())
-        return {'text': res.text(), 'attachments': res.attachments()}
-
     @property
     def value(self):
         if not self.actions:
@@ -119,10 +115,3 @@ class OptionsRequest(SlackRequest):
         if not selected_options:
             return ''
         return selected_options[0].get('value', '')
-
-
-class QualityMetricsRequest(OptionsRequest):
-    def response(self):
-        res = slack_res.EvaluateResponse(self.value)
-        return {'text': res.text(self.resource_url()), 'attachments': res.attachments()}
-

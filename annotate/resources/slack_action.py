@@ -36,5 +36,5 @@ class SlackAction(Resource):
         req = slack_req.EvaluateMetricRequest(payload)
         gspread = Gspread()
         gspread.update_url_score(req.resource_url(), req.user_name, req.attr, req.value)
-        res = slack_res.OptionsResponse(req.resource_url())
+        res = slack_res.OptionsResponse(req.resource_url(), scores=gspread.url_score(req.resource_url()))
         return res.response()

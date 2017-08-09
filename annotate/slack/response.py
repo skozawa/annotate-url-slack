@@ -14,8 +14,7 @@ class OptionsResponse(object):
     def scores(self):
         if self._scores is None:
             gspread = Gspread()
-            data = gspread.find_data_by_url(self.url)
-            self._scores = {v: int(data[v]) for v in self.values if v in data and data[v]}
+            self._scores = gspread.url_score(self.url)
         return self._scores
 
     def response(self):

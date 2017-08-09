@@ -20,7 +20,8 @@ class Gspread(object):
         self.month = today.month
         self._current_spreadsheet = None
         self._current_worksheet = None
-        self.columns = ['URL', 'Time', 'Title', 'Annotator'] + config.METRICS
+        self.metrics = config.METRICS.copy()
+        self.columns = ['URL', 'Time', 'Title', 'Annotator'] + self.metrics
         
     @property
     def current_spreadsheet(self):
@@ -70,3 +71,7 @@ class Gspread(object):
             self.add_url(url, datetime.datetime.now(), '', annotator)
             cell = self.current_worksheet.find(url)
         self.current_worksheet.update_cell(cell.row, self.columns.index(metric) + 1, score)
+
+    def url_score(self, url):
+        data = self.find_data_by_url(url)
+        return {v: int(data[v]) for v in self.metrics if v in data and data[v]}

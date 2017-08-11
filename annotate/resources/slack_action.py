@@ -41,10 +41,12 @@ class SlackAction(Resource):
         req = slack_req.EvaluateMetricRequest(payload)
         db = connect_db()
         entry = entry_service.find_or_create_entry(db, req.resource_url())
-        annotation = annotation_service.update_or_create(db, entry.id, req.user_name, req.attr, req.value)
+        annotation = annotation_service.update_or_create(
+            db, entry.id, req.user_name, req.attr, int(req.value)
+        )
 
         scores = annotation.score()
-        scores[req.attr] = req.value
+        scores[req.attr] = int(req.value)
         res = slack_res.OptionsResponse(req.resource_url(), scores=scores)
 
         return res.response()

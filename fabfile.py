@@ -33,13 +33,17 @@ def nginx(cmd):
     sudo('/usr/sbin/service nginx %s' % (cmd))
 
 
-def supervisor(cmd):
+def supervisor(cmd, service='annotate'):
     if cmd in {'reload', 'reread'}:
         sudo('supervisorctl %s' % (cmd))
     else:
-        sudo('supervisorctl %s annotate' % (cmd))
+        sudo('supervisorctl %s %s' % (cmd, service))
 
 
 def deploy():
     update()
     supervisor('restart')
+
+
+def bot(cmd):
+    supervisor(cmd, service='annotate-bot')

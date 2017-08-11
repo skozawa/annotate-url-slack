@@ -42,15 +42,14 @@ class OptionsResponse(object):
         ]
 
     def _option(self, value):
-        return {'text': self._emoji(self.scores.get(value, 0)) + ' ' + value, 'value': value}
+        return {'text': self._option_text(value), 'value': value}
 
     @staticmethod
-    def _emoji(score):
-        score_emojis = {
-            1: ':one:', 2: ':two:', 3: ':three:',
-            4: ':four:', 5: ':five',
-        }
-        return score_emojis.get(score, ':white_medium_square:')
+    def _option_text(value):
+        score = self.scores.get(value, None)
+        if score is None:
+            return value
+        return "%s [%d]" % (value, score)
 
 
 class EvaluateResponse(object):

@@ -11,6 +11,10 @@ fab update
 ```
 fab nginx:reload
 ```
+- bot restart
+```
+fab bot:restart
+```
 
 
 # Setup

@@ -14,6 +14,7 @@ class DB(object):
             cursorclass=MySQLdb.cursors.DictCursor,
             charset='utf8',
         )
+        self.conn.autocommit(True)
 
     def cursor(self):
         return self.conn.cursor()
@@ -23,3 +24,8 @@ class DB(object):
 
     def close(self):
         self.conn.close()
+
+    def uuid(self):
+        with self.conn.cursor() as cursor:
+            cursor.execute('SELECT UUID_SHORT() as uuid')
+            return cursor.fetchone().get('uuid')

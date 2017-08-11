@@ -7,6 +7,12 @@ class Config(object):
     SESSION_COOKIE_SECURE = False
     GSPREAD_KEY_JSON = 'config/gspread-key.json'
     METRICS = ['Quality', 'Readability', 'Informativeness', 'Style', 'Topic', 'Sentiment']
+    DB_CONFIG = {
+        'db': 'annotate',
+        'host': 'localhost',
+        'user': 'root',
+        'password': ''
+    }
 
 
 class ProductionConfig(Config):

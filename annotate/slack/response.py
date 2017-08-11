@@ -18,7 +18,7 @@ class OptionsResponse(object):
         return self._scores
 
     def response(self):
-        return {'text': self.text(), 'attachments': self.attachements()}
+        return {'text': self.text(), 'attachments': self.attachments()}
 
     def text(self):
         return 'Annotate URL: ' + self.url

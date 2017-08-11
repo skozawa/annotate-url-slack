@@ -14,8 +14,8 @@ CREATE TABLE `entry` (
   KEY (`created`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
-DROP TABLE IF EXISTS `score`;
-CREATE TABLE `score` (
+DROP TABLE IF EXISTS `annotation`;
+CREATE TABLE `annotation` (
   `entry_id` BIGINT UNSIGNED NOT NULL,
   `annotator` VARCHAR(100) NOT NULL,
   `score` MEDIUMBLOB NOT NULL,

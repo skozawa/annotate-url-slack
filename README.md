@@ -26,6 +26,11 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
+- setup db
+```
+./script/setup_db
+```
+
 
 # Local
 - Web

@@ -26,4 +26,12 @@ def find_by_id_and_annotator(db, entry_id, annotator):
         row = cursor.fetchone()
         if row is None:
             return None
-        return Score(row)
+        return Annotation(row)
+
+def update_score(db, annotation, key, value):
+    score = annotation.score()
+    score[key] = value
+    with db.cursor() as cursor:
+        cursor.execute("""
+            UPDATE annotation SET score = %s WHERE entry_id = %s
+        """, (json.dumps(score), annotation.entry_id))

@@ -13,6 +13,12 @@ def create(db, url):
         """, (uuid, url, created))
         return find_by_id(db, uuid)
 
+def find_or_create_entry(db, url):
+    entry = find_by_url(db, url)
+    if entry is not None:
+        return entry
+    return create(db, url)
+
 def find_by_id(db, uuid):
     with db.cursor() as cursor:
         cursor.execute("""SELECT * FROM entry WHERE id = %s""", (uuid,))

@@ -10,8 +10,8 @@ class Config(object):
     DB_CONFIG = {
         'db': 'annotate',
         'host': 'localhost',
-        'user': 'root',
-        'password': ''
+        'user': 'annotate',
+        'password': 'annotate'
     }
 
 

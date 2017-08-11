@@ -6,3 +6,6 @@ mysqladmin -uroot drop $DBNAME -f > /dev/null 2>&1
 mysqladmin -uroot create $DBNAME
 mysql -uroot $DBNAME < db/schema.sql
 
+mysql -uroot -e "grant create,select,update,insert,delete,Lock tables on *.* to annotate@'%' identified by 'annotate' with grant option;"
+mysql -uroot -e "grant create,select,update,insert,delete,Lock tables on *.* to annotate@'localhost' identified by 'annotate' with grant option;"
+mysql -uroot -e "flush privileges;"

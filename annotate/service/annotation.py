@@ -37,7 +37,7 @@ def update_score(db, annotation, key, value):
         """, (json.dumps(score), annotation.entry_id))
 
 def update_or_create(db, entry_id, annotator, metric, value):
-    annotation = find_by_id_and_annotator(entry_id, annotator)
+    annotation = find_by_id_and_annotator(db, entry_id, annotator)
     if annotation is None:
         return create(db, entry_id, annotator, {metric: value})
     update_score(db, annotation, metric, value)

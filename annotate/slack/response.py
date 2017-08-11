@@ -45,7 +45,7 @@ class OptionsResponse(object):
         return {'text': self._option_text(value), 'value': value}
 
     @staticmethod
-    def _option_text(value):
+    def _option_text(self, value):
         score = self.scores.get(value, None)
         if score is None:
             return value

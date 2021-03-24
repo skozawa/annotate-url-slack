@@ -26,7 +26,7 @@ pyOpenSSL==17.2.0
 python-dateutil==2.6.0
 pytz==2017.2
 requests==2.15.1
-rsa==3.4.2
+rsa==4.1
 six==1.10.0
 slackbot==0.4.1
 slackclient==1.0.5

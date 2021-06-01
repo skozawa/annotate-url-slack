@@ -31,6 +31,6 @@ six==1.10.0
 slackbot==0.4.1
 slackclient==1.0.5
 slacker==0.9.50
-urllib3==1.21.1
+urllib3==1.26.5
 websocket-client==0.40.0
 Werkzeug==0.12.2
